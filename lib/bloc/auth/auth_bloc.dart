@@ -55,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.email.trim(),
           event.password.trim(),
         );
-        yield AuthorisedState(user: user);
+        // yield AuthorisedState(user: user);
       } catch (e) {
 
         print(e);
@@ -65,7 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 //      User user = new User();
 //      yield AuthorisedState(user: user);
       await authService.signOut();
-      yield UnauthorisedState(message: "");
+      yield UnauthorisedState(message: "Sign out successfully");
     } else if (event is ChangeEmailEvent) {
       yield AuthLoadingState();
       await authService.changeEmail(

@@ -13,14 +13,12 @@ class IntroSplash extends StatefulWidget {
 }
 
 class _IntroSplashState extends State<IntroSplash> {
-  double _width = 0;
-  bool _visible = false;
+  double _width = 200;
+  bool _visible = true;
 
   @override
   void initState() {
     super.initState();
-    _width = 200;
-    _visible = true;
   }
 
   @override
@@ -39,17 +37,9 @@ class _IntroSplashState extends State<IntroSplash> {
                   SizedBox(
                     height: 100,
                   ),
-                  AnimatedOpacity(
-                    opacity: _visible ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 2500),
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 1800),
-                      curve: Curves.decelerate,
-                      width: _width,
-                      child: Image(
-                        image: AssetImage('lib/assets/weighttracker_logo.png'),
-                      ),
-                    ),
+                  Image(
+                    width: _width,
+                    image: AssetImage('lib/assets/weighttracker_logo.png'),
                   ),
                 ],
               ),

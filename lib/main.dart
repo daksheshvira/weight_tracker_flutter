@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weight_tracker/bloc/auth/auth_bloc.dart';
+import 'package:weight_tracker/bloc/nav/nav_bloc.dart';
+import 'package:weight_tracker/bloc/nav/nav_state.dart';
 import 'package:weight_tracker/services/auth_service.dart';
 import 'package:weight_tracker/services/get_it_service.dart';
 import 'package:weight_tracker/ui/theme/theme.dart';
@@ -27,6 +29,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (ctx) => AuthBloc(authService: AuthService()),
+        ),
+        BlocProvider(
+          create: (ctx) => NavBloc(ShowNavState(currentIndex: 0)),
         ),
         BlocProvider(
           create: (ctx) => WeightBloc(),

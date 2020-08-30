@@ -19,7 +19,7 @@ class WeightPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WeightBloc weightBloc = BlocProvider.of<WeightBloc>(context)
+    final weightBloc = BlocProvider.of<WeightBloc>(context)
       ..add(
         LoadWeightEvent(),
       );
@@ -28,14 +28,6 @@ class WeightPage extends StatelessWidget {
       appBar: PrimaryAppBar(
         title: "Weight",
         implyLeading: false,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              _showSignoutDialog(context, authBloc);
-            },
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -43,6 +35,7 @@ class WeightPage extends StatelessWidget {
             children: <Widget>[
               BlocBuilder<WeightBloc, WeightState>(
                 builder: (ctx, state) {
+                  print("WeightState : " + state.toString());
                   if (state is WeightInitialState) {
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -136,44 +129,6 @@ class WeightPage extends StatelessWidget {
           return AddWeight();
         },
       ),
-    );
-  }
-
-  _showSignoutDialog(BuildContext context, AuthBloc authBloc) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return PrimaryDialog(
-          content: Text("Are you sure you want to logout?"),
-          actions: [
-            FlatButton(
-              child: Text(
-                "Cancel",
-                style: TextStyle(color: Colors.grey),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FlatButton(
-              onPressed: () async {
-                authBloc.add(SignoutEvent());
-                Navigator.pop(context);
-                Navigator.pop(context);
-
-//                await Navigator.pushReplacement(
-//                    context,
-//                    PageTransition(
-//                        type: PageTransitionType.fade, child: WeightTracker()));
-              },
-              child: Text(
-                "Logout",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 

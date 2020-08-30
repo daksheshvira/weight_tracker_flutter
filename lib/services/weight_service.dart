@@ -13,19 +13,23 @@ class WeightService {
     final String uid = user.uid;
 
     List<Weight> weightMeasurements = [];
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(uid)
+          .collection("weights")
+          .orderBy("date", descending: true)
+          .get();
 
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
-        .collection("weights")
-        .orderBy("date", descending: true)
-        .get();
-
-    snapshot.docs.forEach((document) {
-      Weight weight = Weight.fromMap(document.data());
-      weightMeasurements.add(weight);
-    });
-    return weightMeasurements;
+      snapshot.docs.forEach((document) {
+        Weight weight = Weight.fromMap(document.data());
+        weightMeasurements.add(weight);
+      });
+      return weightMeasurements;
+    } catch (e) {
+      print(e);
+      return weightMeasurements;
+    }
   }
 
   Future<void> addWeight(
@@ -44,7 +48,7 @@ class WeightService {
         .collection("weights")
         .doc();
 
-    String docId = docRef.documentID;
+    String docId = docRef.id;
 
     await docRef.set({
       "id": docId,

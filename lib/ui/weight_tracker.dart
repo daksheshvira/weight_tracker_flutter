@@ -16,6 +16,7 @@ class WeightTracker extends StatelessWidget {
         return prev != next && next is! AuthLoadingState;
       },
       builder: (context, state) {
+        print("AuthState : " + state.toString());
         if (state is AuthInitialState) {
           return AuthLoading();
         } else if (state is UnauthorisedState) {
@@ -24,6 +25,8 @@ class WeightTracker extends StatelessWidget {
           return SigninPage();
         } else if (state is AuthorisedState) {
           return HomePage();
+        } else {
+          return Container();
         }
       },
     );
